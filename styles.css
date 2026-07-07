@@ -159,6 +159,14 @@ h2 {
   margin-top: 6px;
 }
 
+.mbti-lineup {
+  position: absolute;
+  inset: -8px -6px auto;
+  width: calc(100% + 12px);
+  height: 330px;
+  overflow: visible;
+}
+
 .character {
   position: absolute;
   bottom: 0;
