@@ -64,7 +64,6 @@ const elements = {
   runtimeStatus: document.querySelector("#runtime-status"),
   stage: document.querySelector("#stage"),
   slab: document.querySelector("#slab"),
-  stageText: document.querySelector("#stage-text"),
   cards: document.querySelector("#cards"),
   summary: document.querySelector("#summary"),
   totalPulls: document.querySelector("#total-pulls"),
@@ -193,10 +192,6 @@ function revealSequentially(results) {
     setRuntimeStatus("召唤完成。");
     setSummoning(false, results.some((card) => card.rarity === "R"));
   }, 900 + results.length * 260 + 280);
-}
-
-function getCost(count) {
-  return count === 10 ? POINTS.ten : POINTS.single;
 }
 
 function openConfirm(count) {
