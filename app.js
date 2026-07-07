@@ -15,45 +15,28 @@ const CHARACTERS = [
   "里凯",
   "斯诺",
   "怀特",
-  "米斯拉",
+  "密斯拉",
   "欧文",
   "布拉德利",
   "浮士德",
   "西诺",
   "希斯克利夫",
-  "尼禄",
+  "尼罗",
   "夏洛克",
   "穆尔",
-  "克洛艾",
-  "拉斯蒂卡",
+  "克罗埃",
+  "拉斯提卡",
   "费加罗",
-  "鲁奇尔",
+  "露琪尔",
   "雷诺克斯",
-  "米契尔",
+  "米琪尔",
 ];
 
+const N_TITLE = "浑身是伤的魔法使";
+
 const R_TITLES = [
-  "平静午后",
-  "向贤者问候",
-  "魔法舍的一天",
-  "训练之后",
-  "小小约定",
-  "回忆碎片",
-  "月夜闲谈",
-  "闪耀预感",
-  "门的另一侧",
-  "递来的花",
-  "风经过的路",
-  "早餐时间",
-  "雨后庭院",
-  "读书余韵",
-  "旅行准备",
-  "温柔灯火",
-  "安静祈愿",
-  "秘密便签",
-  "数着星星",
-  "走廊足音",
-  "明日准备",
+  "修行中的魔法使",
+  "喜欢打扫的魔法使",
 ];
 
 const elements = {
@@ -105,12 +88,13 @@ function sample(list) {
 function drawCard(index) {
   const rarity = Math.random() < RATES.R ? "R" : "N";
   const character = sample(CHARACTERS);
+  const cardTitle = rarity === "R" ? sample(R_TITLES) : N_TITLE;
 
   return {
     index,
     rarity,
     character,
-    title: rarity === "R" ? `【${sample(R_TITLES)}】${character}` : `【N】${character}`,
+    title: `【${cardTitle}】${character}`,
   };
 }
 
