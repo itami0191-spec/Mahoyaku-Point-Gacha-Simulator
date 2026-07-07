@@ -612,7 +612,9 @@ h2 {
 
 .card {
   position: relative;
+  align-self: start;
   height: 118px;
+  max-height: 118px;
   min-height: 118px;
   overflow: hidden;
   border: 1px solid rgba(139, 190, 216, 0.34);
@@ -622,7 +624,7 @@ h2 {
     linear-gradient(160deg, rgba(255, 255, 255, 0.86), rgba(235, 249, 255, 0.5)),
     rgba(255, 255, 255, 0.55);
   opacity: 0;
-  transform: translateY(18px) rotateX(12deg) scale(0.96);
+  transform: translateY(12px);
 }
 
 .card.revealed {
@@ -867,17 +869,17 @@ h2 {
 @keyframes reveal {
   0% {
     opacity: 0;
-    transform: translateY(18px) rotateX(12deg) scale(0.96);
+    transform: translateY(12px);
   }
 
   60% {
     opacity: 1;
-    transform: translateY(-6px) rotateX(0) scale(1.03);
+    transform: translateY(-4px);
   }
 
   100% {
     opacity: 1;
-    transform: translateY(0) rotateX(0) scale(1);
+    transform: translateY(0);
   }
 }
 
