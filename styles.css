@@ -195,6 +195,13 @@ h2 {
   transform: translateX(-50%);
 }
 
+.portrait-card__hair::before,
+.portrait-card__hair::after {
+  content: "";
+  position: absolute;
+  display: block;
+}
+
 .portrait-card__face {
   left: 50%;
   top: 58px;
@@ -230,14 +237,29 @@ h2 {
 }
 
 .portrait-card--left .portrait-card__hair {
-  top: 18px;
+  top: 17px;
   width: 82px;
   height: 86px;
-  border-radius: 34px 34px 28px 28px;
-  background:
-    radial-gradient(circle at 30% 20%, #bba8ef 0 19px, transparent 20px),
-    linear-gradient(135deg, #6d58b5, #a892e5 58%, #7b64c5);
-  clip-path: polygon(12% 18%, 36% 0, 74% 4%, 94% 28%, 86% 100%, 62% 88%, 50% 100%, 36% 88%, 14% 100%, 4% 46%);
+  border-radius: 40px 40px 30px 30px;
+  background: linear-gradient(135deg, #6d58b5, #a892e5 58%, #7b64c5);
+}
+
+.portrait-card--left .portrait-card__hair::before {
+  left: -6px;
+  top: 18px;
+  width: 26px;
+  height: 64px;
+  border-radius: 20px 10px 18px 24px;
+  background: #725db9;
+}
+
+.portrait-card--left .portrait-card__hair::after {
+  right: -5px;
+  top: 20px;
+  width: 24px;
+  height: 58px;
+  border-radius: 10px 20px 24px 18px;
+  background: #9d88dc;
 }
 
 .portrait-card--left .portrait-card__body {
@@ -264,12 +286,31 @@ h2 {
 .portrait-card--center .portrait-card__hair {
   top: 18px;
   width: 88px;
-  height: 78px;
-  border-radius: 38px 38px 24px 24px;
+  height: 62px;
+  border-radius: 38px 38px 22px 22px;
   background:
     radial-gradient(circle at 28% 24%, #ffffff 0 17px, transparent 18px),
     linear-gradient(135deg, #d8e3f2, #ffffff 50%, #c5d4e7);
-  clip-path: polygon(10% 23%, 28% 2%, 50% 0, 74% 5%, 94% 30%, 84% 64%, 67% 54%, 56% 82%, 44% 54%, 28% 70%, 12% 58%);
+}
+
+.portrait-card--center .portrait-card__hair::before {
+  left: 18px;
+  bottom: -14px;
+  width: 20px;
+  height: 30px;
+  border-radius: 0 0 16px 16px;
+  background: #f7fbff;
+  transform: rotate(12deg);
+}
+
+.portrait-card--center .portrait-card__hair::after {
+  right: 18px;
+  bottom: -12px;
+  width: 18px;
+  height: 26px;
+  border-radius: 0 0 16px 16px;
+  background: #d5e0ef;
+  transform: rotate(-10deg);
 }
 
 .portrait-card--center .portrait-card__body {
@@ -297,13 +338,30 @@ h2 {
 
 .portrait-card--right .portrait-card__hair {
   top: 18px;
-  width: 84px;
-  height: 90px;
-  border-radius: 38px 38px 30px 30px;
+  width: 80px;
+  height: 78px;
+  border-radius: 40px 40px 26px 26px;
   background:
     radial-gradient(circle at 64% 24%, #f8f0c6 0 18px, transparent 19px),
     linear-gradient(135deg, #cec08c, #f4ecc6 58%, #d5c793);
-  clip-path: polygon(10% 22%, 30% 4%, 62% 0, 88% 18%, 96% 56%, 84% 100%, 66% 78%, 52% 98%, 36% 76%, 18% 94%, 4% 54%);
+}
+
+.portrait-card--right .portrait-card__hair::before {
+  left: -3px;
+  top: 20px;
+  width: 20px;
+  height: 70px;
+  border-radius: 14px 8px 22px 20px;
+  background: #cabe8d;
+}
+
+.portrait-card--right .portrait-card__hair::after {
+  right: -7px;
+  top: 16px;
+  width: 30px;
+  height: 86px;
+  border-radius: 10px 24px 28px 18px;
+  background: #eadfae;
 }
 
 .portrait-card--right .portrait-card__body {
