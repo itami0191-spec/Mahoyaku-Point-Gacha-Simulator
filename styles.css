@@ -171,6 +171,47 @@ h2 {
   transform-origin: 50% 100%;
 }
 
+.character > span {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+}
+
+.character__shine {
+  z-index: 2;
+  inset: 13% auto auto 18%;
+  width: 46%;
+  height: 62%;
+  border-radius: 999px;
+  background: linear-gradient(110deg, rgba(255, 255, 255, 0.7), transparent 64%);
+  opacity: 0.55;
+  transform: rotate(12deg);
+}
+
+.character__trim {
+  z-index: 3;
+  left: 50%;
+  bottom: 26%;
+  width: 78%;
+  height: 28%;
+  border-radius: 48% 48% 22% 22%;
+  transform: translateX(-50%) rotate(-4deg);
+  background: rgba(255, 255, 255, 0.64);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.58);
+}
+
+.character__accent {
+  z-index: 4;
+  left: 50%;
+  bottom: 45%;
+  width: 44%;
+  height: 8px;
+  border-radius: 999px;
+  transform: translateX(-50%) rotate(18deg);
+  background: rgba(248, 205, 102, 0.9);
+  box-shadow: 0 0 10px rgba(248, 205, 102, 0.32);
+}
+
 .character::before {
   content: "";
   position: absolute;
@@ -213,6 +254,22 @@ h2 {
   clip-path: polygon(16% 18%, 70% 7%, 94% 42%, 84% 100%, 4% 100%, 0 48%);
 }
 
+.character--left .character__trim {
+  bottom: 20%;
+  width: 86%;
+  height: 34%;
+  background:
+    linear-gradient(120deg, rgba(255, 255, 255, 0.86), rgba(245, 231, 213, 0.62)),
+    radial-gradient(ellipse at 70% 32%, rgba(139, 116, 207, 0.16), transparent 46%);
+}
+
+.character--left .character__accent {
+  bottom: 53%;
+  width: 58%;
+  height: 9px;
+  background: linear-gradient(90deg, #d4b16a, #7fcbe4, #c84f4f);
+}
+
 .character--left::after {
   background:
     radial-gradient(circle at 36% 36%, #a590de 0 18px, transparent 19px),
@@ -233,6 +290,30 @@ h2 {
   clip-path: polygon(23% 8%, 79% 7%, 98% 44%, 86% 100%, 11% 100%, 0 45%);
 }
 
+.character--center .character__shine {
+  left: 8%;
+  width: 54%;
+  opacity: 0.42;
+}
+
+.character--center .character__trim {
+  bottom: 15%;
+  width: 82%;
+  height: 42%;
+  border-radius: 48% 48% 12% 12%;
+  background:
+    linear-gradient(100deg, rgba(255, 255, 255, 0.94) 0 34%, transparent 34%),
+    linear-gradient(155deg, rgba(255, 255, 255, 0.86), rgba(241, 235, 211, 0.34));
+}
+
+.character--center .character__accent {
+  bottom: 59%;
+  width: 70%;
+  height: 10px;
+  transform: translateX(-50%) rotate(-12deg);
+  background: linear-gradient(90deg, transparent 0 18%, #f2c65f 18% 100%);
+}
+
 .character--center::after {
   background:
     radial-gradient(circle at 32% 34%, #f6fbff 0 22px, transparent 23px),
@@ -250,6 +331,29 @@ h2 {
     linear-gradient(105deg, transparent 0 25%, rgba(47, 72, 113, 0.78) 25% 36%, transparent 36%),
     linear-gradient(155deg, #b99573 0 46%, #786150 46% 66%, #f6f2ed 66% 100%);
   clip-path: polygon(23% 11%, 82% 19%, 100% 54%, 93% 100%, 9% 100%, 0 43%);
+}
+
+.character--right .character__shine {
+  left: auto;
+  right: 14%;
+  transform: rotate(-18deg);
+}
+
+.character--right .character__trim {
+  bottom: 17%;
+  width: 88%;
+  height: 36%;
+  background:
+    linear-gradient(118deg, rgba(248, 246, 239, 0.92), rgba(248, 246, 239, 0.28) 46%, transparent 47%),
+    linear-gradient(152deg, rgba(61, 86, 126, 0.34), rgba(255, 255, 255, 0.14));
+}
+
+.character--right .character__accent {
+  bottom: 54%;
+  width: 52%;
+  height: 9px;
+  transform: translateX(-50%) rotate(11deg);
+  background: linear-gradient(90deg, #334f7a, #e6c56b);
 }
 
 .character--right::after {
