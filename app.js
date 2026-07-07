@@ -1,5 +1,4 @@
 const POINTS = {
-  initial: 20000,
   single: 200,
   ten: 2000,
 };
@@ -58,7 +57,6 @@ const R_TITLES = [
 ];
 
 const elements = {
-  points: document.querySelector("#points"),
   reset: document.querySelector("#reset"),
   single: document.querySelector("#single"),
   ten: document.querySelector("#ten"),
@@ -73,10 +71,14 @@ const elements = {
   totalR: document.querySelector("#total-r"),
   totalN: document.querySelector("#total-n"),
   rRate: document.querySelector("#r-rate"),
+  confirmModal: document.querySelector("#confirm-modal"),
+  confirmMessage: document.querySelector("#confirm-message"),
+  cancelConfirm: document.querySelector("#cancel-confirm"),
+  okConfirm: document.querySelector("#ok-confirm"),
+  tapScreen: document.querySelector("#tap-screen"),
 };
 
 const state = {
-  points: POINTS.initial,
   stats: {
     pulls: 0,
     R: 0,
@@ -84,7 +86,9 @@ const state = {
   },
   activeTimeouts: [],
   currentResults: [],
+  pendingPull: null,
   isAnimating: false,
+  isAwaitingTap: false,
 };
 
 function formatNumber(value) {
@@ -108,15 +112,14 @@ function drawCard(index) {
 }
 
 function updateUi() {
-  elements.points.textContent = formatNumber(state.points);
   elements.totalPulls.textContent = formatNumber(state.stats.pulls);
   elements.totalR.textContent = formatNumber(state.stats.R);
   elements.totalN.textContent = formatNumber(state.stats.N);
   elements.rRate.textContent =
     state.stats.pulls === 0 ? "0.0%" : `${((state.stats.R / state.stats.pulls) * 100).toFixed(1)}%`;
 
-  elements.single.disabled = state.isAnimating || state.points < POINTS.single;
-  elements.ten.disabled = state.isAnimating || state.points < POINTS.ten;
+  elements.single.disabled = state.isAnimating || state.isAwaitingTap;
+  elements.ten.disabled = state.isAnimating || state.isAwaitingTap;
 }
 
 function setRuntimeStatus(message, type = "ready") {
@@ -171,7 +174,7 @@ function revealAll(results) {
     elements.cards.append(cardElement);
     cardElement.classList.add("revealed");
   });
-  elements.stageText.textContent = "结果已全部揭示。";
+  setRuntimeStatus("结果已全部揭示。");
   setSummoning(false, results.some((card) => card.rarity === "R"));
 }
 
@@ -182,26 +185,65 @@ function revealSequentially(results) {
       const cardElement = createCardElement(card);
       elements.cards.append(cardElement);
       requestAnimationFrame(() => cardElement.classList.add("revealed"));
-      elements.stageText.textContent =
-        card.rarity === "R" ? "金色光芒浮现，R 卡出现。" : "银色光芒落下，N 卡出现。";
+      setRuntimeStatus(card.rarity === "R" ? "金色光芒浮现，R 卡出现。" : "银色光芒落下，N 卡出现。");
     }, 900 + cardIndex * 260);
   });
 
   queue(() => {
-    elements.stageText.textContent = "召唤完成。";
+    setRuntimeStatus("召唤完成。");
     setSummoning(false, results.some((card) => card.rarity === "R"));
   }, 900 + results.length * 260 + 280);
 }
 
-function pull(count) {
-  const cost = count === 10 ? POINTS.ten : POINTS.single;
-  if (state.isAnimating || state.points < cost) {
+function getCost(count) {
+  return count === 10 ? POINTS.ten : POINTS.single;
+}
+
+function openConfirm(count) {
+  if (state.isAnimating || state.isAwaitingTap) {
     return;
   }
 
+  const cost = count === 10 ? POINTS.ten : POINTS.single;
+  state.pendingPull = { count, cost };
+  elements.confirmMessage.textContent = `确定使用召唤点数（${formatNumber(cost)}pt）进行点数召唤（${count}）人？`;
+  elements.confirmModal.hidden = false;
+  elements.okConfirm.focus();
+}
+
+function closeConfirm() {
+  elements.confirmModal.hidden = true;
+}
+
+function enterTapPhase() {
+  if (!state.pendingPull) {
+    return;
+  }
+
+  closeConfirm();
+  clearAnimationQueue();
+  elements.cards.replaceChildren();
+  elements.summary.textContent = "召唤准备中";
+  elements.slab.textContent = "TAP";
+  elements.stage.classList.add("is-tap-ready");
+  elements.tapScreen.hidden = false;
+  state.isAwaitingTap = true;
+  setRuntimeStatus("点击 TAP SCREEN 开始召唤。");
+  updateUi();
+}
+
+function beginSummonFromTap() {
+  if (!state.isAwaitingTap || !state.pendingPull) {
+    return;
+  }
+
+  const { count } = state.pendingPull;
   const results = Array.from({ length: count }, (_, index) => drawCard(index + 1));
   state.currentResults = results;
-  state.points -= cost;
+  state.pendingPull = null;
+  state.isAwaitingTap = false;
+  elements.tapScreen.hidden = true;
+  elements.stage.classList.remove("is-tap-ready");
   state.stats.pulls += count;
   results.forEach((card) => {
     state.stats[card.rarity] += 1;
@@ -210,7 +252,7 @@ function pull(count) {
   renderSummary(results);
   setSummoning(true, results.some((card) => card.rarity === "R"));
   elements.slab.textContent = results.some((card) => card.rarity === "R") ? "RARE" : "POINT";
-  elements.stageText.textContent = count === 10 ? "十连召唤中，石板正在点亮..." : "召唤中...";
+  setRuntimeStatus(count === 10 ? "十连召唤中，石板正在点亮..." : "召唤中...");
   revealSequentially(results);
 }
 
@@ -226,20 +268,38 @@ function safelyRun(action) {
 
 function reset() {
   clearAnimationQueue();
-  state.points = POINTS.initial;
   state.stats = { pulls: 0, R: 0, N: 0 };
   state.currentResults = [];
+  state.pendingPull = null;
+  state.isAwaitingTap = false;
   elements.cards.replaceChildren();
   elements.summary.textContent = "尚未抽卡";
-  elements.stageText.textContent = "点击抽卡，点亮石板。";
   elements.slab.textContent = "POINT";
+  elements.stage.classList.remove("is-tap-ready");
+  elements.tapScreen.hidden = true;
+  closeConfirm();
   setSummoning(false, false);
+  setRuntimeStatus("脚本已就绪，可以抽卡。");
 }
 
-elements.single.addEventListener("click", () => safelyRun(() => pull(1)));
-elements.ten.addEventListener("click", () => safelyRun(() => pull(10)));
+elements.single.addEventListener("click", () => safelyRun(() => openConfirm(1)));
+elements.ten.addEventListener("click", () => safelyRun(() => openConfirm(10)));
 elements.skip.addEventListener("click", () => safelyRun(() => revealAll(state.currentResults)));
 elements.reset.addEventListener("click", () => safelyRun(reset));
+elements.cancelConfirm.addEventListener("click", () =>
+  safelyRun(() => {
+    state.pendingPull = null;
+    closeConfirm();
+  }),
+);
+elements.okConfirm.addEventListener("click", () => safelyRun(enterTapPhase));
+elements.tapScreen.addEventListener("click", () => safelyRun(beginSummonFromTap));
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !elements.confirmModal.hidden) {
+    state.pendingPull = null;
+    closeConfirm();
+  }
+});
 
 updateUi();
 setRuntimeStatus("脚本已就绪，可以抽卡。");
