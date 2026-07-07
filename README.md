@@ -31,6 +31,3 @@ python3 -m http.server 8000
 ```
 
 然后访问 `http://localhost:8000`。
-
-
-选择包含这些文件的分支和根目录 `/` 即可。
