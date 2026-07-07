@@ -140,13 +140,16 @@ h2 {
 .visual-stage::before {
   content: "";
   position: absolute;
-  inset: 36px 28px auto;
-  height: 230px;
-  border-radius: 44% 44% 50% 50%;
+  inset: 34px 24px auto;
+  height: 248px;
+  border-radius: 48% 48% 42% 42%;
   background:
-    radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.9), transparent 3rem),
-    linear-gradient(180deg, rgba(244, 202, 185, 0.42), rgba(255, 255, 255, 0.12));
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.54);
+    radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.94), transparent 3.4rem),
+    linear-gradient(180deg, rgba(246, 205, 182, 0.34), rgba(255, 255, 255, 0.1) 68%),
+    linear-gradient(90deg, rgba(215, 184, 226, 0.22), transparent 28% 72%, rgba(188, 218, 238, 0.26));
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.62),
+    inset 0 24px 45px rgba(255, 255, 255, 0.34);
 }
 
 .character-lineup {
@@ -162,70 +165,97 @@ h2 {
   width: 38%;
   max-width: 168px;
   height: 276px;
-  border-radius: 56px 56px 22px 22px;
-  opacity: 0.88;
-  filter: drop-shadow(0 13px 15px rgba(89, 93, 120, 0.2));
+  border-radius: 48% 48% 20% 20% / 18% 18% 12% 12%;
+  opacity: 0.95;
+  filter: drop-shadow(0 18px 18px rgba(88, 96, 128, 0.18));
+  transform-origin: 50% 100%;
 }
 
 .character::before {
   content: "";
   position: absolute;
-  top: -36px;
+  top: -42px;
   left: 50%;
-  width: 74px;
-  height: 74px;
+  width: 88px;
+  height: 96px;
   border-radius: 50%;
   transform: translateX(-50%);
-  background: linear-gradient(145deg, #fff8ef, #f2d8c8);
-  box-shadow: inset 0 -10px 0 rgba(74, 67, 79, 0.08);
+  background:
+    radial-gradient(circle at 50% 62%, #f7ddcd 0 30px, transparent 31px),
+    linear-gradient(145deg, #fff8ef, #f2d8c8);
+  box-shadow:
+    inset 0 -12px 0 rgba(74, 67, 79, 0.06),
+    0 8px 14px rgba(129, 104, 118, 0.12);
 }
 
 .character::after {
   content: "";
   position: absolute;
-  top: -42px;
+  top: -52px;
   left: 50%;
-  width: 86px;
-  height: 50px;
-  border-radius: 50% 50% 36% 36%;
+  width: 104px;
+  height: 76px;
+  border-radius: 52% 52% 38% 38% / 58% 58% 42% 42%;
   transform: translateX(-50%);
+  filter: drop-shadow(0 5px 5px rgba(62, 61, 91, 0.12));
 }
 
 .character--left {
-  left: 1%;
+  left: 0;
   z-index: 1;
-  height: 250px;
-  background: linear-gradient(165deg, rgba(255, 255, 255, 0.8), rgba(255, 244, 232, 0.66));
+  width: 36%;
+  height: 252px;
+  transform: rotate(-4deg);
+  background:
+    radial-gradient(ellipse at 26% 42%, rgba(255, 255, 255, 0.92) 0 28%, transparent 29%),
+    linear-gradient(118deg, transparent 0 18%, rgba(244, 216, 182, 0.74) 18% 26%, transparent 26%),
+    linear-gradient(154deg, rgba(255, 255, 255, 0.92) 0 52%, rgba(239, 229, 217, 0.7) 52% 100%);
+  clip-path: polygon(16% 18%, 70% 7%, 94% 42%, 84% 100%, 4% 100%, 0 48%);
 }
 
 .character--left::after {
-  background: #8d73c7;
+  background:
+    radial-gradient(circle at 36% 36%, #a590de 0 18px, transparent 19px),
+    linear-gradient(135deg, #7562bd, #b49fe7 54%, #8a74cf);
 }
 
 .character--center {
   left: 50%;
   z-index: 3;
-  width: 43%;
-  height: 288px;
+  width: 42%;
+  height: 296px;
   transform: translateX(-50%);
   background:
-    linear-gradient(90deg, transparent 0 42%, rgba(248, 205, 102, 0.9) 42% 48%, transparent 48%),
-    linear-gradient(160deg, #1f3f70, #172d52 56%, #f7f0df 56% 72%, #1d345b 72%);
+    linear-gradient(92deg, transparent 0 41%, rgba(248, 205, 102, 0.95) 41% 47%, transparent 47%),
+    radial-gradient(ellipse at 72% 32%, rgba(255, 255, 255, 0.94) 0 23%, transparent 24%),
+    linear-gradient(105deg, transparent 0 15%, rgba(245, 235, 210, 0.98) 15% 30%, transparent 30%),
+    linear-gradient(158deg, #1d3d70 0 50%, #132847 50% 64%, #f7f0df 64% 78%, #223c67 78%);
+  clip-path: polygon(23% 8%, 79% 7%, 98% 44%, 86% 100%, 11% 100%, 0 45%);
 }
 
 .character--center::after {
-  background: #e9eef6;
+  background:
+    radial-gradient(circle at 32% 34%, #f6fbff 0 22px, transparent 23px),
+    linear-gradient(135deg, #dfe7f4, #ffffff 48%, #cfdceb);
 }
 
 .character--right {
-  right: 1%;
+  right: 0;
   z-index: 2;
-  height: 258px;
-  background: linear-gradient(160deg, #b8906d, #786150 52%, #f6f2ed 52%);
+  width: 37%;
+  height: 260px;
+  transform: rotate(4deg);
+  background:
+    radial-gradient(ellipse at 71% 35%, rgba(255, 255, 255, 0.92) 0 24%, transparent 25%),
+    linear-gradient(105deg, transparent 0 25%, rgba(47, 72, 113, 0.78) 25% 36%, transparent 36%),
+    linear-gradient(155deg, #b99573 0 46%, #786150 46% 66%, #f6f2ed 66% 100%);
+  clip-path: polygon(23% 11%, 82% 19%, 100% 54%, 93% 100%, 9% 100%, 0 43%);
 }
 
 .character--right::after {
-  background: #e8dfbf;
+  background:
+    radial-gradient(circle at 62% 38%, #f2ebcb 0 19px, transparent 20px),
+    linear-gradient(135deg, #ddd2a6, #f4edcc 56%, #cfc18d);
 }
 
 .gacha-logo {
