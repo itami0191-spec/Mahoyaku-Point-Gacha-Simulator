@@ -571,16 +571,17 @@ h2 {
   color: #c95e67;
 }
 
-.results-sheet,
-.stats-sheet {
-  position: relative;
-  z-index: 4;
-  margin: 0 18px 14px;
-  padding: 16px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.7);
-  box-shadow: 0 10px 24px rgba(88, 129, 156, 0.12);
-  backdrop-filter: blur(12px);
+.result-page {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 18px 22px;
+  background:
+    radial-gradient(circle at 50% 12%, rgba(255, 255, 255, 0.95), transparent 12rem),
+    linear-gradient(180deg, #f3fbff 0%, #fff7fb 62%, #fffdf4 100%);
+  animation: page-in 260ms ease-out both;
 }
 
 .results__header {
@@ -596,11 +597,14 @@ h2 {
 }
 
 .cards {
+  flex: 1;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
-  min-height: 118px;
-  margin-top: 12px;
+  min-height: 0;
+  margin-top: 18px;
+  padding: 2px 2px 10px;
+  overflow-y: auto;
 }
 
 .card {
@@ -670,7 +674,8 @@ h2 {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
-  margin-top: 10px;
+  margin-top: auto;
+  padding-top: 12px;
 }
 
 .stats-grid > div {
@@ -693,6 +698,35 @@ h2 {
   font-size: 1rem;
 }
 
+.result-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.result-button {
+  min-height: 48px;
+  border: 0;
+  border-radius: 999px;
+  color: #5c7990;
+  background: linear-gradient(180deg, #fff, #dcecf5);
+  box-shadow: 0 5px 0 #b7cddc;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.result-button--primary {
+  color: #fff;
+  background: linear-gradient(180deg, #7fdcf4, #39add5);
+  box-shadow: 0 5px 0 #238fb7;
+}
+
+.result-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
 .modal,
 .tap-screen {
   position: fixed;
@@ -710,8 +744,7 @@ h2 {
 
 .modal[hidden],
 .tap-screen[hidden],
-.results-sheet[hidden],
-.stats-sheet[hidden] {
+.result-page[hidden] {
   display: none;
 }
 
@@ -851,6 +884,18 @@ h2 {
   }
 }
 
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 @media (max-width: 380px) {
   .top-bar {
     grid-template-columns: 42px 1fr 52px;
@@ -866,9 +911,11 @@ h2 {
     width: 39%;
   }
 
-  .summon-panel,
-  .results-sheet,
-  .stats-sheet {
+  .summon-panel {
     margin-inline: 12px;
+  }
+
+  .result-page {
+    padding-inline: 14px;
   }
 }

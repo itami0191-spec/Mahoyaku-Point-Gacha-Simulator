@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ポイントガチャ模拟器</title>
-    <link rel="stylesheet" href="styles.css?v=202607070254" />
+    <title>点数召唤模拟器</title>
+    <link rel="stylesheet" href="styles.css?v=202607070308" />
   </head>
   <body>
     <main class="phone-shell">
@@ -17,7 +17,7 @@
           <button class="back-button" type="button" aria-label="返回">‹</button>
           <div>
             <p class="eyebrow">Fan-made simulator</p>
-            <h1 id="page-title">ポイントガチャ</h1>
+            <h1 id="page-title">点数召唤</h1>
           </div>
           <button id="reset" class="mini-button" type="button">Reset</button>
         </header>
@@ -30,8 +30,8 @@
           </div>
 
           <div class="gacha-logo">
-            <span>ポイント</span>
-            <strong>ガチャ</strong>
+            <span>点数</span>
+            <strong>召唤</strong>
           </div>
 
           <div class="gate">
@@ -48,16 +48,16 @@
         <section class="summon-panel" aria-labelledby="summon-title">
           <div class="point-row">
             <span class="point-icon">Pt</span>
-            <h2 id="summon-title">ガチャポイントでプレイ♪</h2>
+            <h2 id="summon-title">使用点数进行召唤♪</h2>
           </div>
 
           <div class="actions">
             <button id="single" class="gacha-button" type="button">
-              <span>シングルガチャ</span>
+              <span>1人召唤</span>
               <strong>200pt</strong>
             </button>
             <button id="ten" class="gacha-button" type="button">
-              <span>10連ガチャ</span>
+              <span>10人召唤</span>
               <strong>2000pt</strong>
             </button>
           </div>
@@ -66,7 +66,7 @@
           <p class="runtime-status" id="runtime-status">脚本加载中...</p>
         </section>
 
-        <section class="results-sheet" id="results-sheet" aria-labelledby="results-title" hidden>
+        <section class="result-page" id="result-page" aria-labelledby="results-title" hidden>
           <div class="results__header">
             <div>
               <p class="eyebrow">Result</p>
@@ -75,27 +75,15 @@
             <div class="summary" id="summary">尚未抽卡</div>
           </div>
           <div id="cards" class="cards" aria-live="polite"></div>
-        </section>
-
-        <section class="stats-sheet" id="stats-sheet" aria-labelledby="stats-title" hidden>
-          <h2 id="stats-title">累计统计</h2>
-          <div class="stats-grid">
-            <div>
-              <span>总抽数</span>
-              <strong id="total-pulls">0</strong>
-            </div>
-            <div>
-              <span>R</span>
-              <strong id="total-r">0</strong>
-            </div>
-            <div>
-              <span>N</span>
-              <strong id="total-n">0</strong>
-            </div>
-            <div>
-              <span>当前 R 率</span>
-              <strong id="r-rate">0.0%</strong>
-            </div>
+          <div class="stats-grid" aria-label="累计统计">
+            <div><span>总抽数</span><strong id="total-pulls">0</strong></div>
+            <div><span>R</span><strong id="total-r">0</strong></div>
+            <div><span>N</span><strong id="total-n">0</strong></div>
+            <div><span>当前 R 率</span><strong id="r-rate">0.0%</strong></div>
+          </div>
+          <div class="result-actions">
+            <button id="again" class="result-button" type="button">再来一次</button>
+            <button id="confirm-result" class="result-button result-button--primary" type="button">确认</button>
           </div>
         </section>
       </section>
@@ -116,6 +104,6 @@
       <span>TAP SCREEN</span>
     </button>
 
-    <script src="app.js?v=202607070254" defer></script>
+    <script src="app.js?v=202607070308" defer></script>
   </body>
 </html>

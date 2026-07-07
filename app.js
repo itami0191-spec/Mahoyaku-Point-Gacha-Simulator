@@ -9,51 +9,51 @@ const RATES = {
 };
 
 const CHARACTERS = [
-  "オズ",
-  "アーサー",
-  "カイン",
-  "リケ",
-  "スノウ",
-  "ホワイト",
-  "ミスラ",
-  "オーエン",
-  "ブラッドリー",
-  "ファウスト",
-  "シノ",
-  "ヒースクリフ",
-  "ネロ",
-  "シャイロック",
-  "ムル",
-  "クロエ",
-  "ラスティカ",
-  "フィガロ",
-  "ルチル",
-  "レノックス",
-  "ミチル",
+  "奥兹",
+  "亚瑟",
+  "凯因",
+  "里凯",
+  "斯诺",
+  "怀特",
+  "米斯拉",
+  "欧文",
+  "布拉德利",
+  "浮士德",
+  "西诺",
+  "希斯克利夫",
+  "尼禄",
+  "夏洛克",
+  "穆尔",
+  "克洛艾",
+  "拉斯蒂卡",
+  "费加罗",
+  "鲁奇尔",
+  "雷诺克斯",
+  "米契尔",
 ];
 
 const R_TITLES = [
-  "穏やかな昼下がり",
-  "賢者への挨拶",
-  "魔法舎の一日",
-  "訓練のあとで",
-  "小さな約束",
-  "思い出の欠片",
-  "月夜の談話",
-  "きらめく予感",
-  "扉の向こう",
-  "手渡された花",
-  "風の通り道",
-  "朝食の時間",
-  "雨上がりの庭",
-  "読書の余韻",
-  "旅支度",
-  "やさしい灯り",
-  "静かな祈り",
-  "秘密のメモ",
-  "星を数えて",
-  "廊下の足音",
-  "明日への準備",
+  "平静午后",
+  "向贤者问候",
+  "魔法舍的一天",
+  "训练之后",
+  "小小约定",
+  "回忆碎片",
+  "月夜闲谈",
+  "闪耀预感",
+  "门的另一侧",
+  "递来的花",
+  "风经过的路",
+  "早餐时间",
+  "雨后庭院",
+  "读书余韵",
+  "旅行准备",
+  "温柔灯火",
+  "安静祈愿",
+  "秘密便签",
+  "数着星星",
+  "走廊足音",
+  "明日准备",
 ];
 
 const elements = {
@@ -66,12 +66,13 @@ const elements = {
   slab: document.querySelector("#slab"),
   cards: document.querySelector("#cards"),
   summary: document.querySelector("#summary"),
-  resultsSheet: document.querySelector("#results-sheet"),
-  statsSheet: document.querySelector("#stats-sheet"),
+  resultPage: document.querySelector("#result-page"),
   totalPulls: document.querySelector("#total-pulls"),
   totalR: document.querySelector("#total-r"),
   totalN: document.querySelector("#total-n"),
   rRate: document.querySelector("#r-rate"),
+  again: document.querySelector("#again"),
+  confirmResult: document.querySelector("#confirm-result"),
   confirmModal: document.querySelector("#confirm-modal"),
   confirmMessage: document.querySelector("#confirm-message"),
   cancelConfirm: document.querySelector("#cancel-confirm"),
@@ -88,6 +89,7 @@ const state = {
   activeTimeouts: [],
   currentResults: [],
   pendingPull: null,
+  lastPullCount: 1,
   isAnimating: false,
   isAwaitingTap: false,
 };
@@ -121,6 +123,8 @@ function updateUi() {
 
   elements.single.disabled = state.isAnimating || state.isAwaitingTap;
   elements.ten.disabled = state.isAnimating || state.isAwaitingTap;
+  elements.again.disabled = state.isAnimating;
+  elements.confirmResult.disabled = state.isAnimating;
 }
 
 function setRuntimeStatus(message, type = "ready") {
@@ -143,7 +147,7 @@ function queue(callback, delay) {
 
 function setSummoning(isSummoning, hasRare = false) {
   elements.stage.classList.toggle("is-summoning", isSummoning);
-  elements.stage.classList.toggle("is-rare", hasRare);
+  elements.stage.classList.toggle("is-rare", isSummoning && hasRare);
   elements.skip.hidden = !isSummoning;
   state.isAnimating = isSummoning;
   updateUi();
@@ -169,35 +173,41 @@ function renderSummary(results) {
 
 function revealAll(results) {
   clearAnimationQueue();
-  elements.resultsSheet.hidden = false;
-  elements.statsSheet.hidden = false;
   elements.cards.replaceChildren();
   results.forEach((card) => {
     const cardElement = createCardElement(card);
     elements.cards.append(cardElement);
     cardElement.classList.add("revealed");
   });
-  setRuntimeStatus("结果已全部揭示。");
-  setSummoning(false, results.some((card) => card.rarity === "R"));
+  setSummoning(false, false);
 }
 
 function revealSequentially(results) {
-  elements.resultsSheet.hidden = false;
-  elements.statsSheet.hidden = false;
   elements.cards.replaceChildren();
   results.forEach((card, cardIndex) => {
     queue(() => {
       const cardElement = createCardElement(card);
       elements.cards.append(cardElement);
       requestAnimationFrame(() => cardElement.classList.add("revealed"));
-      setRuntimeStatus(card.rarity === "R" ? "金色光芒浮现，R 卡出现。" : "银色光芒落下，N 卡出现。");
     }, 900 + cardIndex * 260);
   });
 
   queue(() => {
-    setRuntimeStatus("召唤完成。");
-    setSummoning(false, results.some((card) => card.rarity === "R"));
+    setSummoning(false, false);
   }, 900 + results.length * 260 + 280);
+}
+
+function showInitialPage() {
+  elements.resultPage.hidden = true;
+  elements.tapScreen.hidden = true;
+  elements.stage.classList.remove("is-tap-ready", "is-rare", "is-summoning");
+  elements.slab.textContent = "POINT";
+  setRuntimeStatus("脚本已就绪，可以抽卡。");
+}
+
+function showResultPage() {
+  elements.resultPage.hidden = false;
+  setRuntimeStatus("");
 }
 
 function openConfirm(count) {
@@ -223,16 +233,33 @@ function enterTapPhase() {
 
   closeConfirm();
   clearAnimationQueue();
-  elements.resultsSheet.hidden = true;
-  elements.statsSheet.hidden = true;
+  elements.resultPage.hidden = true;
   elements.cards.replaceChildren();
   elements.summary.textContent = "召唤准备中";
   elements.slab.textContent = "TAP";
   elements.stage.classList.add("is-tap-ready");
   elements.tapScreen.hidden = false;
   state.isAwaitingTap = true;
-  setRuntimeStatus("点击 TAP SCREEN 开始召唤。");
+  setRuntimeStatus("");
   updateUi();
+}
+
+function startDraw(count) {
+  clearAnimationQueue();
+  state.lastPullCount = count;
+  const results = Array.from({ length: count }, (_, index) => drawCard(index + 1));
+  state.currentResults = results;
+  state.stats.pulls += count;
+  results.forEach((card) => {
+    state.stats[card.rarity] += 1;
+  });
+
+  renderSummary(results);
+  updateUi();
+  showResultPage();
+  setSummoning(true, results.some((card) => card.rarity === "R"));
+  elements.slab.textContent = results.some((card) => card.rarity === "R") ? "RARE" : "POINT";
+  revealSequentially(results);
 }
 
 function beginSummonFromTap() {
@@ -241,24 +268,11 @@ function beginSummonFromTap() {
   }
 
   const { count } = state.pendingPull;
-  const results = Array.from({ length: count }, (_, index) => drawCard(index + 1));
-  state.currentResults = results;
   state.pendingPull = null;
   state.isAwaitingTap = false;
   elements.tapScreen.hidden = true;
   elements.stage.classList.remove("is-tap-ready");
-  state.stats.pulls += count;
-  elements.resultsSheet.hidden = false;
-  elements.statsSheet.hidden = false;
-  results.forEach((card) => {
-    state.stats[card.rarity] += 1;
-  });
-
-  renderSummary(results);
-  setSummoning(true, results.some((card) => card.rarity === "R"));
-  elements.slab.textContent = results.some((card) => card.rarity === "R") ? "RARE" : "POINT";
-  setRuntimeStatus(count === 10 ? "十连召唤中，石板正在点亮..." : "召唤中...");
-  revealSequentially(results);
+  startDraw(count);
 }
 
 function safelyRun(action) {
@@ -276,23 +290,32 @@ function reset() {
   state.stats = { pulls: 0, R: 0, N: 0 };
   state.currentResults = [];
   state.pendingPull = null;
+  state.lastPullCount = 1;
   state.isAwaitingTap = false;
   elements.cards.replaceChildren();
-  elements.resultsSheet.hidden = true;
-  elements.statsSheet.hidden = true;
+  elements.resultPage.hidden = true;
   elements.summary.textContent = "尚未抽卡";
   elements.slab.textContent = "POINT";
   elements.stage.classList.remove("is-tap-ready");
   elements.tapScreen.hidden = true;
   closeConfirm();
   setSummoning(false, false);
-  setRuntimeStatus("脚本已就绪，可以抽卡。");
+  showInitialPage();
 }
 
 elements.single.addEventListener("click", () => safelyRun(() => openConfirm(1)));
 elements.ten.addEventListener("click", () => safelyRun(() => openConfirm(10)));
 elements.skip.addEventListener("click", () => safelyRun(() => revealAll(state.currentResults)));
 elements.reset.addEventListener("click", () => safelyRun(reset));
+elements.again.addEventListener("click", () => safelyRun(() => startDraw(state.lastPullCount)));
+elements.confirmResult.addEventListener("click", () =>
+  safelyRun(() => {
+    clearAnimationQueue();
+    state.currentResults = [];
+    setSummoning(false, false);
+    showInitialPage();
+  })
+);
 elements.cancelConfirm.addEventListener("click", () =>
   safelyRun(() => {
     state.pendingPull = null;
@@ -309,4 +332,4 @@ document.addEventListener("keydown", (event) => {
 });
 
 updateUi();
-setRuntimeStatus("脚本已就绪，可以抽卡。");
+showInitialPage();
