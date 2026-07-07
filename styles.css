@@ -202,10 +202,7 @@ h2 {
   height: 62px;
   border-radius: 50%;
   transform: translateX(-50%);
-  background:
-    radial-gradient(circle at 36% 46%, #40556d 0 3px, transparent 4px),
-    radial-gradient(circle at 64% 46%, #40556d 0 3px, transparent 4px),
-    linear-gradient(145deg, #fff0e4, #f1cfbe);
+  background: linear-gradient(145deg, #fff0e4, #f1cfbe);
 }
 
 .portrait-card__body {
@@ -238,12 +235,14 @@ h2 {
 
 .portrait-card--left .portrait-card__body {
   background:
-    linear-gradient(90deg, transparent 0 45%, #d9b66b 45% 50%, transparent 50%),
+    radial-gradient(circle at 50% 34%, #65c9dd 0 5px, transparent 6px),
+    linear-gradient(90deg, transparent 0 38%, rgba(218, 181, 95, 0.62) 38% 42%, transparent 42%),
     linear-gradient(180deg, #ffffff, #efe0d2);
 }
 
 .portrait-card--left .portrait-card__accent {
-  background: linear-gradient(90deg, #d5ad5d, #56c7df, #c84e4e);
+  width: 46px;
+  background: linear-gradient(90deg, #d5ad5d 0 42%, #65c9dd 42% 68%, #c84e4e 68%);
 }
 
 .portrait-card--center {
@@ -264,15 +263,17 @@ h2 {
   width: 104px;
   height: 158px;
   background:
-    linear-gradient(90deg, transparent 0 42%, #f2c65f 42% 48%, transparent 48%),
-    linear-gradient(115deg, rgba(255, 255, 255, 0.95) 0 38%, transparent 38%),
+    radial-gradient(circle at 50% 32%, #d7b15a 0 6px, transparent 7px),
+    linear-gradient(125deg, rgba(255, 255, 255, 0.94) 0 32%, transparent 32%),
+    linear-gradient(235deg, rgba(255, 255, 255, 0.82) 0 28%, transparent 28%),
     linear-gradient(180deg, #213f70, #172c50);
 }
 
 .portrait-card--center .portrait-card__accent {
   top: 150px;
-  width: 70px;
-  background: #f2c65f;
+  width: 42px;
+  height: 8px;
+  background: #d7b15a;
 }
 
 .portrait-card--right {
@@ -287,12 +288,13 @@ h2 {
 
 .portrait-card--right .portrait-card__body {
   background:
-    linear-gradient(90deg, transparent 0 64%, #314f7b 64% 75%, transparent 75%),
+    linear-gradient(90deg, transparent 0 62%, rgba(49, 79, 123, 0.76) 62% 70%, transparent 70%),
     linear-gradient(180deg, #b89270, #7e624c);
 }
 
 .portrait-card--right .portrait-card__accent {
-  background: linear-gradient(90deg, #314f7b, #e6c56b);
+  width: 44px;
+  background: linear-gradient(90deg, #314f7b 0 58%, #d8bd6d 58%);
 }
 
 .character {
