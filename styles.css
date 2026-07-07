@@ -167,6 +167,134 @@ h2 {
   overflow: visible;
 }
 
+.portrait-card {
+  position: absolute;
+  bottom: 10px;
+  width: 116px;
+  height: 252px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.82);
+  border-radius: 34px;
+  background: rgba(255, 255, 255, 0.58);
+  box-shadow:
+    0 16px 22px rgba(91, 112, 140, 0.16),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.58);
+}
+
+.portrait-card > span {
+  position: absolute;
+  display: block;
+}
+
+.portrait-card__hair {
+  left: 50%;
+  top: 20px;
+  width: 76px;
+  height: 70px;
+  border-radius: 999px 999px 30px 30px;
+  transform: translateX(-50%);
+}
+
+.portrait-card__face {
+  left: 50%;
+  top: 58px;
+  width: 58px;
+  height: 62px;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  background:
+    radial-gradient(circle at 36% 46%, #40556d 0 3px, transparent 4px),
+    radial-gradient(circle at 64% 46%, #40556d 0 3px, transparent 4px),
+    linear-gradient(145deg, #fff0e4, #f1cfbe);
+}
+
+.portrait-card__body {
+  left: 50%;
+  bottom: -18px;
+  width: 96px;
+  height: 142px;
+  border-radius: 34px 34px 18px 18px;
+  transform: translateX(-50%);
+}
+
+.portrait-card__accent {
+  left: 50%;
+  top: 142px;
+  width: 58px;
+  height: 10px;
+  border-radius: 999px;
+  transform: translateX(-50%);
+}
+
+.portrait-card--left {
+  left: 18px;
+  transform: rotate(-2deg) scale(0.94);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(250, 242, 232, 0.66));
+}
+
+.portrait-card--left .portrait-card__hair {
+  background: linear-gradient(135deg, #7a65bd, #b29ee8);
+}
+
+.portrait-card--left .portrait-card__body {
+  background:
+    linear-gradient(90deg, transparent 0 45%, #d9b66b 45% 50%, transparent 50%),
+    linear-gradient(180deg, #ffffff, #efe0d2);
+}
+
+.portrait-card--left .portrait-card__accent {
+  background: linear-gradient(90deg, #d5ad5d, #56c7df, #c84e4e);
+}
+
+.portrait-card--center {
+  left: 50%;
+  z-index: 3;
+  width: 126px;
+  height: 274px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, rgba(248, 252, 255, 0.8), rgba(223, 235, 251, 0.64));
+}
+
+.portrait-card--center .portrait-card__hair {
+  width: 82px;
+  background: linear-gradient(135deg, #e1e9f5, #ffffff 52%, #cbd9ea);
+}
+
+.portrait-card--center .portrait-card__body {
+  width: 104px;
+  height: 158px;
+  background:
+    linear-gradient(90deg, transparent 0 42%, #f2c65f 42% 48%, transparent 48%),
+    linear-gradient(115deg, rgba(255, 255, 255, 0.95) 0 38%, transparent 38%),
+    linear-gradient(180deg, #213f70, #172c50);
+}
+
+.portrait-card--center .portrait-card__accent {
+  top: 150px;
+  width: 70px;
+  background: #f2c65f;
+}
+
+.portrait-card--right {
+  right: 18px;
+  transform: rotate(2deg) scale(0.94);
+  background: linear-gradient(180deg, rgba(255, 253, 241, 0.78), rgba(238, 223, 192, 0.62));
+}
+
+.portrait-card--right .portrait-card__hair {
+  background: linear-gradient(135deg, #d1c28e, #f4ecc6);
+}
+
+.portrait-card--right .portrait-card__body {
+  background:
+    linear-gradient(90deg, transparent 0 64%, #314f7b 64% 75%, transparent 75%),
+    linear-gradient(180deg, #b89270, #7e624c);
+}
+
+.portrait-card--right .portrait-card__accent {
+  background: linear-gradient(90deg, #314f7b, #e6c56b);
+}
+
 .character {
   position: absolute;
   bottom: 0;

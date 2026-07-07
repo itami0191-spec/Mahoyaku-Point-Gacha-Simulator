@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>点数召唤模拟器</title>
-    <link rel="stylesheet" href="styles.css?v=202607070549" />
+    <link rel="stylesheet" href="styles.css?v=202607070605" />
   </head>
   <body>
     <main class="phone-shell">
@@ -24,65 +24,24 @@
 
         <div class="visual-stage" id="stage" aria-live="polite">
           <div class="character-lineup" aria-hidden="true">
-            <svg class="mbti-lineup" viewBox="0 0 380 320" role="img">
-              <defs>
-                <filter id="softShadow" x="-20%" y="-20%" width="140%" height="145%">
-                  <feDropShadow dx="0" dy="10" stdDeviation="8" flood-color="#6b7898" flood-opacity="0.18" />
-                </filter>
-              </defs>
-
-              <g filter="url(#softShadow)">
-                <ellipse cx="94" cy="287" rx="58" ry="12" fill="#b7cbe0" opacity="0.18" />
-                <path d="M55 146 Q94 121 133 146 L143 286 H45 Z" fill="#fff7ef" />
-                <path d="M62 166 Q94 188 126 166 L122 286 H66 Z" fill="#f0ded0" />
-                <path d="M64 139 Q94 117 124 139 Q118 154 94 155 Q70 154 64 139Z" fill="#ffffff" />
-                <circle cx="94" cy="91" r="35" fill="#f5d6c7" />
-                <path d="M58 83 Q68 42 101 47 Q132 50 136 87 Q116 66 94 68 Q75 68 58 83Z" fill="#8b73cf" />
-                <path d="M65 80 Q78 59 100 58 Q91 78 65 90Z" fill="#a994e2" />
-                <circle cx="82" cy="94" r="3" fill="#40556d" />
-                <circle cx="106" cy="94" r="3" fill="#40556d" />
-                <path d="M84 108 Q94 115 105 108" fill="none" stroke="#b76d73" stroke-width="3" stroke-linecap="round" />
-                <path d="M53 178 Q36 215 46 247" fill="none" stroke="#f8f2ea" stroke-width="18" stroke-linecap="round" />
-                <path d="M135 178 Q151 214 141 247" fill="none" stroke="#f8f2ea" stroke-width="18" stroke-linecap="round" />
-                <path d="M70 169 H118" stroke="#d8b263" stroke-width="7" stroke-linecap="round" />
-                <circle cx="94" cy="178" r="6" fill="#59c7de" />
-              </g>
-
-              <g filter="url(#softShadow)">
-                <ellipse cx="190" cy="294" rx="66" ry="13" fill="#9fb7d3" opacity="0.2" />
-                <path d="M145 148 Q190 118 235 148 L250 292 H130 Z" fill="#203d70" />
-                <path d="M158 159 L190 197 L222 159 L235 292 H145 Z" fill="#162a4e" />
-                <path d="M158 151 Q190 174 222 151 L211 205 H169 Z" fill="#f7efdd" />
-                <path d="M150 165 L181 155 L167 202" fill="#ffffff" opacity="0.92" />
-                <path d="M230 165 L199 155 L213 202" fill="#ffffff" opacity="0.92" />
-                <path d="M159 188 Q190 202 221 188" fill="none" stroke="#f2c65f" stroke-width="8" stroke-linecap="round" />
-                <circle cx="190" cy="84" r="37" fill="#f3d4c5" />
-                <path d="M149 75 Q159 39 194 41 Q228 43 235 78 Q213 62 188 65 Q166 65 149 75Z" fill="#e8eef8" />
-                <path d="M158 68 Q180 45 210 50 Q198 70 169 82Z" fill="#ffffff" />
-                <circle cx="178" cy="89" r="3" fill="#36516d" />
-                <circle cx="203" cy="89" r="3" fill="#36516d" />
-                <path d="M179 105 Q190 112 202 105" fill="none" stroke="#a95f68" stroke-width="3" stroke-linecap="round" />
-                <circle cx="190" cy="159" r="8" fill="#f2c65f" />
-                <path d="M147 184 Q124 221 135 259" fill="none" stroke="#203d70" stroke-width="20" stroke-linecap="round" />
-                <path d="M233 184 Q256 221 245 259" fill="none" stroke="#203d70" stroke-width="20" stroke-linecap="round" />
-              </g>
-
-              <g filter="url(#softShadow)">
-                <ellipse cx="292" cy="288" rx="58" ry="12" fill="#b7cbe0" opacity="0.18" />
-                <path d="M252 151 Q292 126 332 151 L342 286 H242 Z" fill="#b89372" />
-                <path d="M264 168 Q292 188 320 168 L316 286 H268 Z" fill="#f6f1e8" />
-                <path d="M252 177 Q235 217 246 250" fill="none" stroke="#b89372" stroke-width="18" stroke-linecap="round" />
-                <path d="M333 177 Q350 217 338 250" fill="none" stroke="#b89372" stroke-width="18" stroke-linecap="round" />
-                <path d="M273 168 H314" stroke="#314f7b" stroke-width="8" stroke-linecap="round" />
-                <path d="M295 170 L315 194" stroke="#e6c56b" stroke-width="5" stroke-linecap="round" />
-                <circle cx="292" cy="92" r="35" fill="#f4d8c8" />
-                <path d="M257 82 Q265 50 296 49 Q327 49 337 84 Q317 68 293 69 Q273 69 257 82Z" fill="#e7dfba" />
-                <path d="M300 52 Q319 58 334 83 Q315 76 300 91Z" fill="#d5c994" />
-                <circle cx="281" cy="96" r="3" fill="#41576d" />
-                <circle cx="304" cy="96" r="3" fill="#41576d" />
-                <path d="M282 110 Q292 116 304 110" fill="none" stroke="#b76d73" stroke-width="3" stroke-linecap="round" />
-              </g>
-            </svg>
+            <div class="portrait-card portrait-card--left">
+              <span class="portrait-card__hair"></span>
+              <span class="portrait-card__face"></span>
+              <span class="portrait-card__body"></span>
+              <span class="portrait-card__accent"></span>
+            </div>
+            <div class="portrait-card portrait-card--center">
+              <span class="portrait-card__hair"></span>
+              <span class="portrait-card__face"></span>
+              <span class="portrait-card__body"></span>
+              <span class="portrait-card__accent"></span>
+            </div>
+            <div class="portrait-card portrait-card--right">
+              <span class="portrait-card__hair"></span>
+              <span class="portrait-card__face"></span>
+              <span class="portrait-card__body"></span>
+              <span class="portrait-card__accent"></span>
+            </div>
           </div>
 
           <div class="gacha-logo">
