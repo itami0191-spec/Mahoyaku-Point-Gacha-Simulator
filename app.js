@@ -125,14 +125,24 @@ function sample(list) {
 
 function drawCard(index) {
   const rarity = Math.random() < RATES.R ? "R" : "N";
-  const card = rarity === "R" ? sample(R_CARDS) : null;
-  const character = card?.character ?? sample(CHARACTERS);
+
+  if (rarity === "R") {
+    const card = sample(R_CARDS);
+    return {
+      index,
+      rarity,
+      character: card.character,
+      title: `【${card.title}】${card.character}`,
+    };
+  }
+
+  const character = sample(CHARACTERS);
 
   return {
     index,
     rarity,
     character,
-    title: rarity === "R" ? `【${card.title}】${character}` : `【N】${character}`,
+    title: `【N】${character}`,
   };
 }
 
