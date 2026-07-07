@@ -230,7 +230,14 @@ h2 {
 }
 
 .portrait-card--left .portrait-card__hair {
-  background: linear-gradient(135deg, #7a65bd, #b29ee8);
+  top: 18px;
+  width: 82px;
+  height: 86px;
+  border-radius: 34px 34px 28px 28px;
+  background:
+    radial-gradient(circle at 30% 20%, #bba8ef 0 19px, transparent 20px),
+    linear-gradient(135deg, #6d58b5, #a892e5 58%, #7b64c5);
+  clip-path: polygon(12% 18%, 36% 0, 74% 4%, 94% 28%, 86% 100%, 62% 88%, 50% 100%, 36% 88%, 14% 100%, 4% 46%);
 }
 
 .portrait-card--left .portrait-card__body {
@@ -255,8 +262,14 @@ h2 {
 }
 
 .portrait-card--center .portrait-card__hair {
-  width: 82px;
-  background: linear-gradient(135deg, #e1e9f5, #ffffff 52%, #cbd9ea);
+  top: 18px;
+  width: 88px;
+  height: 78px;
+  border-radius: 38px 38px 24px 24px;
+  background:
+    radial-gradient(circle at 28% 24%, #ffffff 0 17px, transparent 18px),
+    linear-gradient(135deg, #d8e3f2, #ffffff 50%, #c5d4e7);
+  clip-path: polygon(10% 23%, 28% 2%, 50% 0, 74% 5%, 94% 30%, 84% 64%, 67% 54%, 56% 82%, 44% 54%, 28% 70%, 12% 58%);
 }
 
 .portrait-card--center .portrait-card__body {
@@ -283,7 +296,14 @@ h2 {
 }
 
 .portrait-card--right .portrait-card__hair {
-  background: linear-gradient(135deg, #d1c28e, #f4ecc6);
+  top: 18px;
+  width: 84px;
+  height: 90px;
+  border-radius: 38px 38px 30px 30px;
+  background:
+    radial-gradient(circle at 64% 24%, #f8f0c6 0 18px, transparent 19px),
+    linear-gradient(135deg, #cec08c, #f4ecc6 58%, #d5c793);
+  clip-path: polygon(10% 22%, 30% 4%, 62% 0, 88% 18%, 96% 56%, 84% 100%, 66% 78%, 52% 98%, 36% 76%, 18% 94%, 4% 54%);
 }
 
 .portrait-card--right .portrait-card__body {
