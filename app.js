@@ -66,6 +66,8 @@ const elements = {
   slab: document.querySelector("#slab"),
   cards: document.querySelector("#cards"),
   summary: document.querySelector("#summary"),
+  resultsSheet: document.querySelector("#results-sheet"),
+  statsSheet: document.querySelector("#stats-sheet"),
   totalPulls: document.querySelector("#total-pulls"),
   totalR: document.querySelector("#total-r"),
   totalN: document.querySelector("#total-n"),
@@ -167,6 +169,8 @@ function renderSummary(results) {
 
 function revealAll(results) {
   clearAnimationQueue();
+  elements.resultsSheet.hidden = false;
+  elements.statsSheet.hidden = false;
   elements.cards.replaceChildren();
   results.forEach((card) => {
     const cardElement = createCardElement(card);
@@ -178,6 +182,8 @@ function revealAll(results) {
 }
 
 function revealSequentially(results) {
+  elements.resultsSheet.hidden = false;
+  elements.statsSheet.hidden = false;
   elements.cards.replaceChildren();
   results.forEach((card, cardIndex) => {
     queue(() => {
@@ -217,6 +223,8 @@ function enterTapPhase() {
 
   closeConfirm();
   clearAnimationQueue();
+  elements.resultsSheet.hidden = true;
+  elements.statsSheet.hidden = true;
   elements.cards.replaceChildren();
   elements.summary.textContent = "召唤准备中";
   elements.slab.textContent = "TAP";
@@ -240,6 +248,8 @@ function beginSummonFromTap() {
   elements.tapScreen.hidden = true;
   elements.stage.classList.remove("is-tap-ready");
   state.stats.pulls += count;
+  elements.resultsSheet.hidden = false;
+  elements.statsSheet.hidden = false;
   results.forEach((card) => {
     state.stats[card.rarity] += 1;
   });
@@ -268,6 +278,8 @@ function reset() {
   state.pendingPull = null;
   state.isAwaitingTap = false;
   elements.cards.replaceChildren();
+  elements.resultsSheet.hidden = true;
+  elements.statsSheet.hidden = true;
   elements.summary.textContent = "尚未抽卡";
   elements.slab.textContent = "POINT";
   elements.stage.classList.remove("is-tap-ready");
@@ -285,7 +297,7 @@ elements.cancelConfirm.addEventListener("click", () =>
   safelyRun(() => {
     state.pendingPull = null;
     closeConfirm();
-  }),
+  })
 );
 elements.okConfirm.addEventListener("click", () => safelyRun(enterTapPhase));
 elements.tapScreen.addEventListener("click", () => safelyRun(beginSummonFromTap));

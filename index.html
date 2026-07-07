@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>ポイントガチャ模拟器</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=202607070254" />
   </head>
   <body>
     <main class="phone-shell">
@@ -66,7 +66,7 @@
           <p class="runtime-status" id="runtime-status">脚本加载中...</p>
         </section>
 
-        <section class="results-sheet" aria-labelledby="results-title">
+        <section class="results-sheet" id="results-sheet" aria-labelledby="results-title" hidden>
           <div class="results__header">
             <div>
               <p class="eyebrow">Result</p>
@@ -77,7 +77,7 @@
           <div id="cards" class="cards" aria-live="polite"></div>
         </section>
 
-        <section class="stats-sheet" aria-labelledby="stats-title">
+        <section class="stats-sheet" id="stats-sheet" aria-labelledby="stats-title" hidden>
           <h2 id="stats-title">累计统计</h2>
           <div class="stats-grid">
             <div>
@@ -116,6 +116,6 @@
       <span>TAP SCREEN</span>
     </button>
 
-    <script src="app.js" defer></script>
+    <script src="app.js?v=202607070254" defer></script>
   </body>
 </html>

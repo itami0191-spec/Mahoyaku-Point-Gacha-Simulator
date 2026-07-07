@@ -709,7 +709,9 @@ h2 {
 }
 
 .modal[hidden],
-.tap-screen[hidden] {
+.tap-screen[hidden],
+.results-sheet[hidden],
+.stats-sheet[hidden] {
   display: none;
 }
 
