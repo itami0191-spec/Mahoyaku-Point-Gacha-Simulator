@@ -375,6 +375,120 @@ h2 {
   background: linear-gradient(90deg, #314f7b 0 58%, #d8bd6d 58%);
 }
 
+.portrait-card .portrait-card__hair,
+.portrait-card .portrait-card__face,
+.portrait-card .portrait-card__body,
+.portrait-card .portrait-card__accent {
+  transform: none;
+  border-radius: 10px;
+}
+
+.portrait-card .portrait-card__hair::before,
+.portrait-card .portrait-card__hair::after {
+  display: none;
+}
+
+.portrait-card .portrait-card__face {
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.portrait-card--left .portrait-card__hair {
+  left: 12px;
+  top: 14px;
+  width: 56px;
+  height: 84px;
+  background: #7a65bd;
+}
+
+.portrait-card--left .portrait-card__face {
+  left: auto;
+  right: 12px;
+  top: 14px;
+  width: 28px;
+  height: 84px;
+}
+
+.portrait-card--left .portrait-card__body {
+  left: 12px;
+  bottom: 72px;
+  width: 92px;
+  height: 72px;
+  background: #fff8ef;
+}
+
+.portrait-card--left .portrait-card__accent {
+  left: 12px;
+  top: auto;
+  bottom: 20px;
+  width: 92px;
+  height: 36px;
+  background:
+    linear-gradient(90deg, #d5ad5d 0 34%, #65c9dd 34% 62%, #c84e4e 62%);
+}
+
+.portrait-card--center .portrait-card__hair {
+  left: 14px;
+  top: 14px;
+  width: 98px;
+  height: 50px;
+  background: linear-gradient(90deg, #dce7f4 0 42%, #ffffff 42% 72%, #cbd9ea 72%);
+}
+
+.portrait-card--center .portrait-card__face {
+  left: 14px;
+  top: 78px;
+  width: 34px;
+  height: 78px;
+}
+
+.portrait-card--center .portrait-card__body {
+  left: 60px;
+  bottom: 58px;
+  width: 52px;
+  height: 122px;
+  background: #213f70;
+}
+
+.portrait-card--center .portrait-card__accent {
+  left: 14px;
+  top: auto;
+  bottom: 18px;
+  width: 98px;
+  height: 24px;
+  background: #172c50;
+}
+
+.portrait-card--right .portrait-card__hair {
+  left: 12px;
+  top: 14px;
+  width: 92px;
+  height: 58px;
+  background: linear-gradient(90deg, #cec08c 0 58%, #f4ecc6 58%);
+}
+
+.portrait-card--right .portrait-card__face {
+  left: 12px;
+  top: 88px;
+  width: 46px;
+  height: 58px;
+}
+
+.portrait-card--right .portrait-card__body {
+  left: 12px;
+  bottom: 18px;
+  width: 92px;
+  height: 78px;
+  background: #b89270;
+}
+
+.portrait-card--right .portrait-card__accent {
+  left: 72px;
+  top: 88px;
+  width: 32px;
+  height: 58px;
+  background: #314f7b;
+}
+
 .character {
   position: absolute;
   bottom: 0;
