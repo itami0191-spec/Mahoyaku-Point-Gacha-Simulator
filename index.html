@@ -3,52 +3,52 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ポイントガチャ模拟器</title>
-    <link rel="stylesheet" href="styles.css" />
+    <title>点数召唤模拟器</title>
+    <link rel="stylesheet" href="styles.css?v=202607080244" />
   </head>
   <body>
-    <main class="app">
-      <section class="hero" aria-labelledby="page-title">
-        <div class="hero__copy">
-          <p class="eyebrow">Fan-made web simulator</p>
-          <h1 id="page-title">ポイントガチャ模拟器</h1>
-          <p class="lead">
-            参考《魔法使いの約束》的ポイントガチャ机制制作：只包含 N / R，
-            单抽 200pt，十连 2,000pt。页面不使用官方素材，仅模拟概率与抽卡节奏。
-          </p>
-          <div class="rate-card" aria-label="提供割合">
-            <div>
-              <span class="rate-card__label">R</span>
-              <strong>7.0%</strong>
-            </div>
-            <div>
-              <span class="rate-card__label">N</span>
-              <strong>93.0%</strong>
-            </div>
-          </div>
+    <main class="phone-shell">
+      <section class="gacha-screen" aria-labelledby="page-title">
+        <div class="ambient-stars" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span><span></span>
         </div>
 
-        <aside class="panel rules">
-          <h2>池子规则</h2>
-          <ul>
-            <li>只做通常ポイントガチャ，不含活动特别点数池。</li>
-            <li>无 SR / SSR，无保底，无 UP。</li>
-            <li>N 为 21 人基础卡，R 为通常ガチャ R 文字卡。</li>
-            <li>概率为公开 Wiki 的检证参考值，非官方保证值。</li>
-          </ul>
-        </aside>
-      </section>
-
-      <section class="summon panel" aria-labelledby="summon-title">
-        <div class="summon__header">
+        <header class="top-bar">
+          <button class="back-button" type="button" aria-label="返回">‹</button>
           <div>
-            <p class="eyebrow">Point balance</p>
-            <h2 id="summon-title"><span id="points">20,000</span> pt</h2>
+            <p class="eyebrow">Fan-made simulator</p>
+            <h1 id="page-title">点数召唤</h1>
           </div>
-          <button id="reset" class="button button--ghost" type="button">重置</button>
-        </div>
+          <button id="reset" class="mini-button" type="button">Reset</button>
+        </header>
 
-        <div class="summon-stage" id="stage" aria-live="polite">
+        <div class="visual-stage" id="stage" aria-live="polite">
+          <div class="character-lineup" aria-hidden="true">
+            <div class="portrait-card portrait-card--left">
+              <span class="portrait-card__hair"></span>
+              <span class="portrait-card__face"></span>
+              <span class="portrait-card__body"></span>
+              <span class="portrait-card__accent"></span>
+            </div>
+            <div class="portrait-card portrait-card--center">
+              <span class="portrait-card__hair"></span>
+              <span class="portrait-card__face"></span>
+              <span class="portrait-card__body"></span>
+              <span class="portrait-card__accent"></span>
+            </div>
+            <div class="portrait-card portrait-card--right">
+              <span class="portrait-card__hair"></span>
+              <span class="portrait-card__face"></span>
+              <span class="portrait-card__body"></span>
+              <span class="portrait-card__accent"></span>
+            </div>
+          </div>
+
+          <div class="gacha-logo">
+            <span>点数</span>
+            <strong>召唤</strong>
+          </div>
+
           <div class="gate">
             <div class="gate__moon"></div>
             <div class="gate__ring gate__ring--outer"></div>
@@ -58,51 +58,67 @@
               <span></span><span></span><span></span><span></span><span></span>
             </div>
           </div>
-          <p id="stage-text">点击抽卡，点亮石板。</p>
         </div>
 
-        <div class="actions">
-          <button id="single" class="button" type="button">单抽 200pt</button>
-          <button id="ten" class="button button--primary" type="button">十连 2,000pt</button>
-          <button id="skip" class="button button--ghost" type="button" hidden>跳过动画</button>
-        </div>
-      </section>
+        <section class="summon-panel" aria-labelledby="summon-title">
+          <div class="point-row">
+            <span class="point-icon">Pt</span>
+            <h2 id="summon-title">使用点数进行召唤♪</h2>
+          </div>
 
-      <section class="results panel" aria-labelledby="results-title">
-        <div class="results__header">
-          <div>
-            <p class="eyebrow">Result</p>
-            <h2 id="results-title">抽卡结果</h2>
+          <div class="actions">
+            <button id="single" class="gacha-button" type="button">
+              <span>1人召唤</span>
+              <strong>200pt</strong>
+            </button>
+            <button id="ten" class="gacha-button" type="button">
+              <span>10人召唤</span>
+              <strong>2000pt</strong>
+            </button>
           </div>
-          <div class="summary" id="summary">尚未抽卡</div>
-        </div>
 
-        <div id="cards" class="cards" aria-live="polite"></div>
-      </section>
+          <button id="skip" class="skip-button" type="button" hidden>跳过动画</button>
+          <p class="runtime-status" id="runtime-status">脚本加载中...</p>
+        </section>
 
-      <section class="stats panel" aria-labelledby="stats-title">
-        <h2 id="stats-title">累计统计</h2>
-        <div class="stats-grid">
-          <div>
-            <span>总抽数</span>
-            <strong id="total-pulls">0</strong>
+        <section class="result-page" id="result-page" aria-labelledby="results-title" hidden>
+          <div class="results__header">
+            <div>
+              <p class="eyebrow">Result</p>
+              <h2 id="results-title">抽卡结果</h2>
+            </div>
+            <div class="summary" id="summary">尚未抽卡</div>
           </div>
-          <div>
-            <span>R</span>
-            <strong id="total-r">0</strong>
+          <div id="cards" class="cards" aria-live="polite"></div>
+          <div class="stats-grid" aria-label="累计统计">
+            <div><span>总抽数</span><strong id="total-pulls">0</strong></div>
+            <div><span>R</span><strong id="total-r">0</strong></div>
+            <div><span>N</span><strong id="total-n">0</strong></div>
+            <div><span>当前 R 率</span><strong id="r-rate">0.0%</strong></div>
           </div>
-          <div>
-            <span>N</span>
-            <strong id="total-n">0</strong>
+          <div class="result-actions">
+            <button id="again" class="result-button" type="button">再来一次</button>
+            <button id="confirm-result" class="result-button result-button--primary" type="button">确认</button>
           </div>
-          <div>
-            <span>当前 R 率</span>
-            <strong id="r-rate">0.0%</strong>
-          </div>
-        </div>
+        </section>
       </section>
     </main>
 
-    <script src="app.js" type="module"></script>
+    <div id="confirm-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="confirm-title" hidden>
+      <div class="modal__card">
+        <h2 id="confirm-title">召唤确认</h2>
+        <p id="confirm-message">确定使用召唤点数（200pt）进行点数召唤（1）人？</p>
+        <div class="modal__actions">
+          <button id="cancel-confirm" class="modal-button modal-button--ghost" type="button">取消</button>
+          <button id="ok-confirm" class="modal-button" type="button">OK</button>
+        </div>
+      </div>
+    </div>
+
+    <button id="tap-screen" class="tap-screen" type="button" hidden>
+      <span>TAP SCREEN</span>
+    </button>
+
+    <script src="app.js?v=202607070527" defer></script>
   </body>
 </html>
