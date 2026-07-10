@@ -1,14 +1,14 @@
-const POINTS = {
+var POINTS = {
   single: 200,
   ten: 2000,
 };
 
-const RATES = {
+var RATES = {
   R: 0.07,
   N: 0.93,
 };
 
-const CHARACTERS = [
+var CHARACTERS = [
   "Oz",
   "Arthur",
   "Cain",
@@ -32,7 +32,7 @@ const CHARACTERS = [
   "Mitile",
 ];
 
-const R_CARDS = [
+var R_CARDS = [
   { title: "总有一天独挡一面", character: "Mitile" },
   { title: "想派上用场", character: "Mitile" },
   { title: "好好拉伸", character: "Lennox" },
@@ -77,7 +77,7 @@ const R_CARDS = [
   { title: "想要传达感谢", character: "Oz" },
 ];
 
-const elements = {
+var elements = {
   reset: document.querySelector("#reset"),
   single: document.querySelector("#single"),
   ten: document.querySelector("#ten"),
@@ -101,7 +101,7 @@ const elements = {
   tapScreen: document.querySelector("#tap-screen"),
 };
 
-const state = {
+var state = {
   stats: {
     pulls: 0,
     R: 0,
@@ -116,33 +116,56 @@ const state = {
 };
 
 function formatNumber(value) {
-  return new Intl.NumberFormat("en-US").format(value);
+  return String(value).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 function sample(list) {
   return list[Math.floor(Math.random() * list.length)];
 }
 
+function clearChildren(element) {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+}
+
+function setClass(element, className, shouldHaveClass) {
+  if (shouldHaveClass) {
+    element.classList.add(className);
+  } else {
+    element.classList.remove(className);
+  }
+}
+
+function onNextFrame(callback) {
+  if (window.requestAnimationFrame) {
+    window.requestAnimationFrame(callback);
+    return;
+  }
+
+  window.setTimeout(callback, 16);
+}
+
 function drawCard(index) {
-  const rarity = Math.random() < RATES.R ? "R" : "N";
+  var rarity = Math.random() < RATES.R ? "R" : "N";
 
   if (rarity === "R") {
-    const card = sample(R_CARDS);
+    var card = sample(R_CARDS);
     return {
-      index,
-      rarity,
+      index: index,
+      rarity: rarity,
       character: card.character,
-      title: `【${card.title}】${card.character}`,
+      title: "【" + card.title + "】" + card.character,
     };
   }
 
-  const character = sample(CHARACTERS);
+  var character = sample(CHARACTERS);
 
   return {
-    index,
-    rarity,
-    character,
-    title: `【N】${character}`,
+    index: index,
+    rarity: rarity,
+    character: character,
+    title: "【N】" + character,
   };
 }
 
@@ -151,7 +174,7 @@ function updateUi() {
   elements.totalR.textContent = formatNumber(state.stats.R);
   elements.totalN.textContent = formatNumber(state.stats.N);
   elements.rRate.textContent =
-    state.stats.pulls === 0 ? "0.0%" : `${((state.stats.R / state.stats.pulls) * 100).toFixed(1)}%`;
+    state.stats.pulls === 0 ? "0.0%" : ((state.stats.R / state.stats.pulls) * 100).toFixed(1) + "%";
 
   elements.single.disabled = state.isAnimating || state.isAwaitingTap;
   elements.ten.disabled = state.isAnimating || state.isAwaitingTap;
@@ -159,72 +182,90 @@ function updateUi() {
   elements.confirmResult.disabled = state.isAnimating;
 }
 
-function setRuntimeStatus(message, type = "ready") {
+function setRuntimeStatus(message, type) {
+  type = type || "ready";
   elements.runtimeStatus.textContent = message;
-  elements.runtimeStatus.className = `runtime-status runtime-status--${type}`;
+  elements.runtimeStatus.className = "runtime-status runtime-status--" + type;
 }
 
 function clearAnimationQueue() {
-  state.activeTimeouts.forEach((timeoutId) => window.clearTimeout(timeoutId));
+  state.activeTimeouts.forEach(function (timeoutId) {
+    window.clearTimeout(timeoutId);
+  });
   state.activeTimeouts = [];
 }
 
 function queue(callback, delay) {
-  const timeoutId = window.setTimeout(() => {
-    state.activeTimeouts = state.activeTimeouts.filter((id) => id !== timeoutId);
+  var timeoutId = window.setTimeout(function () {
+    state.activeTimeouts = state.activeTimeouts.filter(function (id) {
+      return id !== timeoutId;
+    });
     callback();
   }, delay);
   state.activeTimeouts.push(timeoutId);
 }
 
-function setSummoning(isSummoning, hasRare = false) {
-  elements.stage.classList.toggle("is-summoning", isSummoning);
-  elements.stage.classList.toggle("is-rare", isSummoning && hasRare);
+function setSummoning(isSummoning, hasRare) {
+  hasRare = !!hasRare;
+  setClass(elements.stage, "is-summoning", isSummoning);
+  setClass(elements.stage, "is-rare", isSummoning && hasRare);
   elements.skip.hidden = !isSummoning;
   state.isAnimating = isSummoning;
   updateUi();
 }
 
 function createCardElement(card) {
-  const cardElement = document.createElement("article");
-  cardElement.className = `card card--${card.rarity.toLowerCase()}`;
-  cardElement.innerHTML = `
-    <span class="card__rarity">${card.rarity}</span>
-    <h3 class="card__title">${card.title}</h3>
-    <p class="card__character">${card.character}</p>
-    <span class="card__index">#${String(card.index).padStart(2, "0")}</span>
-  `;
+  var cardElement = document.createElement("article");
+  var cardIndex = String(card.index);
+  while (cardIndex.length < 2) {
+    cardIndex = "0" + cardIndex;
+  }
+  cardElement.className = "card card--" + card.rarity.toLowerCase();
+  cardElement.innerHTML =
+    '<span class="card__rarity">' +
+    card.rarity +
+    '</span><h3 class="card__title">' +
+    card.title +
+    '</h3><p class="card__character">' +
+    card.character +
+    '</p><span class="card__index">#' +
+    cardIndex +
+    "</span>";
   return cardElement;
 }
 
 function renderSummary(results) {
-  const rareCount = results.filter((card) => card.rarity === "R").length;
-  const normalCount = results.length - rareCount;
-  elements.summary.textContent = `${results.length} 抽：R ${rareCount} / N ${normalCount}`;
+  var rareCount = results.filter(function (card) {
+    return card.rarity === "R";
+  }).length;
+  var normalCount = results.length - rareCount;
+  elements.summary.textContent = results.length + " 抽：R " + rareCount + " / N " + normalCount;
 }
 
 function revealAll(results) {
   clearAnimationQueue();
-  elements.cards.replaceChildren();
-  results.forEach((card) => {
-    const cardElement = createCardElement(card);
-    elements.cards.append(cardElement);
+  clearChildren(elements.cards);
+  results.forEach(function (card) {
+    var cardElement = createCardElement(card);
+    elements.cards.appendChild(cardElement);
     cardElement.classList.add("revealed");
   });
   setSummoning(false, false);
 }
 
 function revealSequentially(results) {
-  elements.cards.replaceChildren();
-  results.forEach((card, cardIndex) => {
-    queue(() => {
-      const cardElement = createCardElement(card);
-      elements.cards.append(cardElement);
-      requestAnimationFrame(() => cardElement.classList.add("revealed"));
+  clearChildren(elements.cards);
+  results.forEach(function (card, cardIndex) {
+    queue(function () {
+      var cardElement = createCardElement(card);
+      elements.cards.appendChild(cardElement);
+      onNextFrame(function () {
+        cardElement.classList.add("revealed");
+      });
     }, 900 + cardIndex * 260);
   });
 
-  queue(() => {
+  queue(function () {
     setSummoning(false, false);
   }, 900 + results.length * 260 + 280);
 }
@@ -247,9 +288,10 @@ function openConfirm(count) {
     return;
   }
 
-  const cost = count === 10 ? POINTS.ten : POINTS.single;
-  state.pendingPull = { count, cost };
-  elements.confirmMessage.textContent = `确定使用召唤点数（${formatNumber(cost)}pt）进行点数召唤（${count}）人？`;
+  var cost = count === 10 ? POINTS.ten : POINTS.single;
+  state.pendingPull = { count: count, cost: cost };
+  elements.confirmMessage.textContent =
+    "确定使用召唤点数（" + formatNumber(cost) + "pt）进行点数召唤（" + count + "）人？";
   elements.confirmModal.hidden = false;
   elements.okConfirm.focus();
 }
@@ -266,7 +308,7 @@ function enterTapPhase() {
   closeConfirm();
   clearAnimationQueue();
   elements.resultPage.hidden = true;
-  elements.cards.replaceChildren();
+  clearChildren(elements.cards);
   elements.summary.textContent = "召唤准备中";
   elements.slab.textContent = "TAP";
   elements.stage.classList.add("is-tap-ready");
@@ -279,18 +321,24 @@ function enterTapPhase() {
 function startDraw(count) {
   clearAnimationQueue();
   state.lastPullCount = count;
-  const results = Array.from({ length: count }, (_, index) => drawCard(index + 1));
+  var results = [];
+  for (var index = 0; index < count; index += 1) {
+    results.push(drawCard(index + 1));
+  }
   state.currentResults = results;
   state.stats.pulls += count;
-  results.forEach((card) => {
+  results.forEach(function (card) {
     state.stats[card.rarity] += 1;
   });
 
   renderSummary(results);
   updateUi();
   showResultPage();
-  setSummoning(true, results.some((card) => card.rarity === "R"));
-  elements.slab.textContent = results.some((card) => card.rarity === "R") ? "RARE" : "POINT";
+  var hasRare = results.some(function (card) {
+    return card.rarity === "R";
+  });
+  setSummoning(true, hasRare);
+  elements.slab.textContent = hasRare ? "RARE" : "POINT";
   revealSequentially(results);
 }
 
@@ -299,7 +347,7 @@ function beginSummonFromTap() {
     return;
   }
 
-  const { count } = state.pendingPull;
+  var count = state.pendingPull.count;
   state.pendingPull = null;
   state.isAwaitingTap = false;
   elements.tapScreen.hidden = true;
@@ -324,7 +372,7 @@ function reset() {
   state.pendingPull = null;
   state.lastPullCount = 1;
   state.isAwaitingTap = false;
-  elements.cards.replaceChildren();
+  clearChildren(elements.cards);
   elements.resultPage.hidden = true;
   elements.summary.textContent = "尚未抽卡";
   elements.slab.textContent = "POINT";
@@ -335,28 +383,50 @@ function reset() {
   showInitialPage();
 }
 
-elements.single.addEventListener("click", () => safelyRun(() => openConfirm(1)));
-elements.ten.addEventListener("click", () => safelyRun(() => openConfirm(10)));
-elements.skip.addEventListener("click", () => safelyRun(() => revealAll(state.currentResults)));
-elements.reset.addEventListener("click", () => safelyRun(reset));
-elements.again.addEventListener("click", () => safelyRun(() => startDraw(state.lastPullCount)));
-elements.confirmResult.addEventListener("click", () =>
-  safelyRun(() => {
+elements.single.addEventListener("click", function () {
+  safelyRun(function () {
+    openConfirm(1);
+  });
+});
+elements.ten.addEventListener("click", function () {
+  safelyRun(function () {
+    openConfirm(10);
+  });
+});
+elements.skip.addEventListener("click", function () {
+  safelyRun(function () {
+    revealAll(state.currentResults);
+  });
+});
+elements.reset.addEventListener("click", function () {
+  safelyRun(reset);
+});
+elements.again.addEventListener("click", function () {
+  safelyRun(function () {
+    startDraw(state.lastPullCount);
+  });
+});
+elements.confirmResult.addEventListener("click", function () {
+  safelyRun(function () {
     clearAnimationQueue();
     state.currentResults = [];
     setSummoning(false, false);
     showInitialPage();
-  })
-);
-elements.cancelConfirm.addEventListener("click", () =>
-  safelyRun(() => {
+  });
+});
+elements.cancelConfirm.addEventListener("click", function () {
+  safelyRun(function () {
     state.pendingPull = null;
     closeConfirm();
-  })
-);
-elements.okConfirm.addEventListener("click", () => safelyRun(enterTapPhase));
-elements.tapScreen.addEventListener("click", () => safelyRun(beginSummonFromTap));
-document.addEventListener("keydown", (event) => {
+  });
+});
+elements.okConfirm.addEventListener("click", function () {
+  safelyRun(enterTapPhase);
+});
+elements.tapScreen.addEventListener("click", function () {
+  safelyRun(beginSummonFromTap);
+});
+document.addEventListener("keydown", function (event) {
   if (event.key === "Escape" && !elements.confirmModal.hidden) {
     state.pendingPull = null;
     closeConfirm();
